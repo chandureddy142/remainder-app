@@ -4,7 +4,7 @@ import threading
 import time
 from datetime import datetime
 from plyer import notification
-import winsound  # Import for sound alerts
+import os  # Import for cross-platform sound alerts
 
 app = Flask(__name__)
 
@@ -49,7 +49,12 @@ def check_reminders():
                 message=desc if desc else "It's time!",
                 timeout=10
             )
-            winsound.Beep(1000, 500)  # Play a beep sound
+            # Cross-platform sound alert
+            if os.name == "nt":
+                import winsound
+                winsound.Beep(1000, 500)
+            else:
+                os.system("aplay /usr/share/sounds/freedesktop/stereo/message.oga" if os.path.exists("/usr/share/sounds/freedesktop/stereo/message.oga") else "echo -e '\a'")
         time.sleep(60)
 
 # Function to get all reminders
