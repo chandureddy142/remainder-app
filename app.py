@@ -81,39 +81,3 @@ th.start()
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-# HTML Template (index.html)
-with open("templates/index.html", "w") as f:
-    f.write("""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Reminder App</title>
-        <script>
-            async function addReminder() {
-                const title = document.getElementById('title').value;
-                const description = document.getElementById('description').value;
-                const time = document.getElementById('time').value;
-                if (!title || !time) {
-                    alert('Title and Time are required!');
-                    return;
-                }
-                await fetch('/add', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, description, time })
-                });
-                alert('Reminder Added!');
-                location.reload();
-            }
-        </script>
-    </head>
-    <body>
-        <h1>Reminder App</h1>
-        <input type="text" id="title" placeholder="Title" required><br>
-        <input type="text" id="description" placeholder="Description"><br>
-        <input type="time" id="time" required><br>
-        <button onclick="addReminder()">Add Reminder</button>
-    </body>
-    </html>
-    """)
