@@ -50,11 +50,13 @@ def check_reminders():
                 timeout=10
             )
             # Cross-platform sound alert
-            if os.name == "nt":
-                import winsound
-                winsound.Beep(1000, 500)
-            else:
-                os.system("aplay /usr/share/sounds/freedesktop/stereo/message.oga" if os.path.exists("/usr/share/sounds/freedesktop/stereo/message.oga") else "echo -e '\a'")
+            try:
+                if os.name == "nt":
+                    os.system("powershell -c (New-Object Media.SoundPlayer 'C:\\Windows\\Media\\notify.wav').PlaySync();")
+                else:
+                    os.system("aplay /usr/share/sounds/freedesktop/stereo/message.oga" if os.path.exists("/usr/share/sounds/freedesktop/stereo/message.oga") else "echo -e '\a'")
+            except Exception as e:
+                print("Sound alert failed:", e)
         time.sleep(60)
 
 # Function to get all reminders
