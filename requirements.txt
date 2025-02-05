@@ -1,5 +1,4 @@
 flask
-sqlite3
 plyer
 winsound
 gunicorn
